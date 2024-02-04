@@ -14,7 +14,7 @@
    return (
      <Container my={4} position="relative">
 -      <img alt="Wow, an image." src={`http://localhost:35901/img/${encodedPath}`} />
-+      <img alt="Wow, an image." src={`img/${encodedPath}`} />
++      <img alt="Wow, an image." src={fullPath} />
      </Container>
    )
  }
