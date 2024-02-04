@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>ORUI</title>
+        <title>{process.env.NEXT_PUBLIC_TITLE ?? "ORUI"}</title>
       </Head>
       <GraphPage />
     </>
@@ -1036,7 +1036,7 @@ export const Graph = function (props: GraphProps) {
   ])
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       const fg = graphRef.current
       const d3 = await d3promise
       if (physics.gravityOn && !(scope.nodeIds.length && !physics.gravityLocal)) {
@@ -1240,20 +1240,20 @@ export const Graph = function (props: GraphProps) {
       if (visuals.refLinkColor && roamLink.type === 'ref') {
         return needsHighlighting && (visuals.refLinkHighlightColor || visuals.linkHighlight)
           ? highlightColors[visuals.refLinkColor][
-              visuals.refLinkHighlightColor || visuals.linkHighlight
-            ](opacity)
+            visuals.refLinkHighlightColor || visuals.linkHighlight
+          ](opacity)
           : highlightColors[visuals.refLinkColor][visuals.backgroundColor](
-              visuals.highlightFade * opacity,
-            )
+            visuals.highlightFade * opacity,
+          )
       }
       if (visuals.citeLinkColor && roamLink.type?.includes('cite')) {
         return needsHighlighting && (visuals.citeLinkHighlightColor || visuals.linkHighlight)
           ? highlightColors[visuals.citeLinkColor][
-              visuals.citeLinkHighlightColor || visuals.linkHighlight
-            ](opacity)
+            visuals.citeLinkHighlightColor || visuals.linkHighlight
+          ](opacity)
           : highlightColors[visuals.citeLinkColor][visuals.backgroundColor](
-              visuals.highlightFade * opacity,
-            )
+            visuals.highlightFade * opacity,
+          )
       }
 
       return getLinkColor({
