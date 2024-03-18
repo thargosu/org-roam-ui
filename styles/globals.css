@@ -13,3 +13,23 @@ h1 {
 * {
   box-sizing: border-box;
 }
+
+table {
+  border-style: hidden;
+}
+
+th,
+tr,
+td {
+  padding: 0px 4px;
+  border-width: 1px;
+  border-color: gray;
+  border-style: dashed;
+}
+
+code.inline-code,
+code.inline-verbatim {
+  border-radius: 5px;
+  border: 1px solid #bcbec0;
+  padding: 2px;
+}
