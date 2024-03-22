@@ -8,6 +8,7 @@ import attachments from 'uniorg-attach'
 // rehypeHighlight does not have any types
 // add error thing here
 // import highlight from 'rehype-highlight'
+import rehypePrism from '@mapbox/rehype-prism';
 import katex from 'rehype-katex'
 import 'katex/dist/katex.css'
 import rehype2react from 'rehype-react'
@@ -77,6 +78,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
 
   const orgProcessor = unified()
     .use(uniorgParse)
+    .data('settings', { fragment: true })
     .use(extractKeywords)
     .use(attachments, {
       idDir: attachDir || undefined,
@@ -197,7 +199,8 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
               return <p lang="en">{children as ReactNode}</p>
             },
           },
-        }),
+        })
+        .use(rehypePrism as any, { ignoreMissing: true }),
     [previewNode?.id],
   )
 
