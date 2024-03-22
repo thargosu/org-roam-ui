@@ -17,6 +17,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@lilib/hooks": "^0.1.1",
+    "@mapbox/rehype-prism": "^0.9.0",
     "@react-hook/window-size": "^3.0.7",
     "@react-slate/core": "^1.0.1",
     "@types/color": "^3.0.2",
@@ -79,6 +80,7 @@
   },
   "devDependencies": {
     "@types/d3-interpolate": "^3.0.1",
+    "@types/mapbox__rehype-prism": "^0.8.3",
     "@types/react": "17.0.14",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",

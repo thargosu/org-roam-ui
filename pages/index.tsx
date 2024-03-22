@@ -107,6 +107,7 @@ export default function Home() {
     <>
       <Head>
         <title>{process.env.NEXT_PUBLIC_TITLE ?? "ORUI"}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-tomorrow.min.css" />
       </Head>
       <GraphPage />
     </>
