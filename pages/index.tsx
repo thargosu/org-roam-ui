@@ -62,6 +62,7 @@ import { nodeSize } from '../util/nodeSize'
 import { getNodeColor } from '../util/getNodeColor'
 import { isLinkRelatedToNode } from '../util/isLinkRelatedToNode'
 import { getLinkColor } from '../util/getLinkColor'
+import { Search } from '../components/Search'
 
 const d3promise = import('d3-force-3d')
 
@@ -657,6 +658,10 @@ export function GraphPage() {
                     />
                   </Tooltip>
                 )}
+                <Search
+                  nodeById={nodeByIdRef.current!}
+                  setPreviewNode={setPreviewNode}
+                />
                 <Tooltip label={isOpen ? 'Close sidebar' : 'Open sidebar'}>
                   <IconButton
                     m={1}
