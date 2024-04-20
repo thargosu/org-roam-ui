@@ -661,6 +661,9 @@ export function GraphPage() {
                 <Search
                   nodeById={nodeByIdRef.current!}
                   setPreviewNode={setPreviewNode}
+                  onClickResultItem={(id) => {
+                    setEmacsNodeId(id)
+                  }}
                 />
                 <Tooltip label={isOpen ? 'Close sidebar' : 'Open sidebar'}>
                   <IconButton
