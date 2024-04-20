@@ -8,16 +8,20 @@ import { NodeById } from '../../pages'
 export const Search: React.FC<{
   nodeById: NodeById
   setPreviewNode: (newPresent: NodeObject) => void
-}> = ({ nodeById, setPreviewNode }) => {
+  onClickResultItem?: (nodeId: string) => void
+}> = ({ nodeById, setPreviewNode, onClickResultItem }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleOnClickResultItem = useCallback(
     (id: string) => {
       const node = nodeById[id]
       onClose()
-      if (!!node) setPreviewNode(node)
+      if (!!node) {
+        setPreviewNode(node)
+        if (onClickResultItem) onClickResultItem(node.id)
+      }
     },
-    [nodeById, onClose, setPreviewNode],
+    [nodeById, onClickResultItem, onClose, setPreviewNode],
   )
 
   return (
