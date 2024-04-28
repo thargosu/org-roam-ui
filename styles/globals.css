@@ -27,13 +27,6 @@ td {
   border-style: dashed;
 }
 
-code.inline-code,
-code.inline-verbatim {
-  border-radius: 5px;
-  border: 1px solid #bcbec0;
-  padding: 2px;
-}
-
 pre.src-block[class] {
   font-size: 12px;
 }
