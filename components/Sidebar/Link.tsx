@@ -67,6 +67,7 @@ import { defaultNoteStyle, viewerNoteStyle, outlineNoteStyle } from './noteStyle
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import { getThemeColor } from '../../util/getThemeColor'
+import { useHash } from '../../util/hash'
 
 export const NodeLink = (props: NodeLinkProps) => {
   const {
@@ -88,6 +89,7 @@ export const NodeLink = (props: NodeLinkProps) => {
   const uri = href.replaceAll(/.*?\:(.*)/g, '$1')
   const ID = id ?? uri
   const linkText = isWiki ? `[[${children}]]` : children
+  const { setHash } = useHash()
   return (
     <Text
       as="a"
@@ -103,7 +105,11 @@ export const NodeLink = (props: NodeLinkProps) => {
         e.preventDefault()
         openContextMenu(nodeById[uri], e)
       }}
-      onClick={() => setPreviewNode(nodeById[uri])}
+      onClick={() => {
+        const node = nodeById[uri];
+        setPreviewNode(node)
+        setHash(node?.id);
+      }}
       // TODO  don't hardcode the opacitycolor
       _hover={{ textDecoration: 'none', cursor: 'pointer', bgColor: coolHighlightColor + '22' }}
       _focus={{ outlineColor: highlightColor }}
@@ -281,7 +287,7 @@ export const PreviewLink = (props: LinkProps) => {
                     color="black"
                     px={3}
                     sx={{ ...defaultNoteStyle, ...extraNoteStyle }}
-                    //overflowY="scroll"
+                  //overflowY="scroll"
                   >
                     <ProcessedOrg
                       previewText={orgText}

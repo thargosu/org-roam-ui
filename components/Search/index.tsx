@@ -4,6 +4,7 @@ import { NodeObject } from 'force-graph'
 import { SearchContent } from './SearchContent'
 import { useCallback } from 'react'
 import { NodeById } from '../../pages'
+import { useHash } from '../../util/hash'
 
 export const Search: React.FC<{
   nodeById: NodeById
@@ -11,6 +12,7 @@ export const Search: React.FC<{
   onClickResultItem?: (nodeId: string) => void
 }> = ({ nodeById, setPreviewNode, onClickResultItem }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { setHash } = useHash();
 
   const handleOnClickResultItem = useCallback(
     (id: string) => {
@@ -18,10 +20,11 @@ export const Search: React.FC<{
       onClose()
       if (!!node) {
         setPreviewNode(node)
+        setHash(node.id);
         if (onClickResultItem) onClickResultItem(node.id)
       }
     },
-    [nodeById, onClickResultItem, onClose, setPreviewNode],
+    [nodeById, onClickResultItem, onClose, setHash, setPreviewNode],
   )
 
   return (
