@@ -64,7 +64,6 @@ import { getNodeColor } from '../util/getNodeColor'
 import { isLinkRelatedToNode } from '../util/isLinkRelatedToNode'
 import { getLinkColor } from '../util/getLinkColor'
 import { Search } from '../components/Search'
-import { useHash } from '../util/hash'
 
 const d3promise = import('d3-force-3d')
 
@@ -514,21 +513,6 @@ export function GraphPage() {
     windowWidth,
   )
 
-  const { setHash } = useHash()
-
-  useEffect(() => {
-    const hash = window.location.hash
-    if (!hash) return
-    console.log("update", hash)
-    const id = hash.replace('#', '')
-    const node = nodeByIdRef.current[id]
-    if (node) {
-      setHash(id)
-      setEmacsNodeId(id)
-      setPreviewNode(node)
-    }
-  }, [setHash, setPreviewNode])
-
   return (
     <VariablesContext.Provider value={{ ...emacsVariables }}>
       <Box
@@ -630,7 +614,6 @@ export function GraphPage() {
                   setPreviewNode={setPreviewNode}
                   onClickResultItem={(id) => {
                     setEmacsNodeId(id)
-                    setHash(id)
                   }}
                 />
                 <Tooltip label={isOpen ? 'Close sidebar' : 'Open sidebar'}>
@@ -774,13 +757,10 @@ export const Graph = function (props: GraphProps) {
 
   const { emacsTheme } = useContext<ThemeContextProps>(ThemeContext)
 
-  const { setHash } = useHash();
-
   const handleClick = (click: string, node: OrgRoamNode, event: any) => {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
-        setHash(node.id)
         break
       }
       case mouse.local: {

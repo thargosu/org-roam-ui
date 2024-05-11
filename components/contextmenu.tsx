@@ -48,7 +48,6 @@ import { deleteNodeInEmacs, openNodeInEmacs, createNodeInEmacs } from '../util/w
 import { BiNetworkChart } from 'react-icons/bi'
 import { TagMenu } from './TagMenu'
 import { initialFilter, TagColors } from './config'
-import { useHash } from '../util/hash'
 
 export default interface ContextMenuProps {
   background: Boolean
@@ -84,7 +83,6 @@ export const ContextMenu = (props: ContextMenuProps) => {
   } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
   const copyRef = useRef<any>()
-  const { setHash } = useHash();
   return (
     <>
       <Menu defaultIsOpen closeOnBlur={false} onClose={() => menuClose()}>
@@ -166,7 +164,6 @@ export const ContextMenu = (props: ContextMenuProps) => {
                 icon={<ViewIcon />}
                 onClick={() => {
                   setPreviewNode(target)
-                  setHash(target?.id);
                 }}
               >
                 Preview
