@@ -764,7 +764,7 @@ export const Graph = function (props: GraphProps) {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
-        router.replace(`/#${node.id}`, undefined, { shallow: true })
+        router.replace({ hash: node.id }, undefined, { shallow: true })
         break
       }
       case mouse.local: {
