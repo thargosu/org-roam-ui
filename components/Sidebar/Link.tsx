@@ -103,7 +103,13 @@ export const NodeLink = (props: NodeLinkProps) => {
         e.preventDefault()
         openContextMenu(nodeById[uri], e)
       }}
-      onClick={() => setPreviewNode(nodeById[uri])}
+      onClick={() => {
+        const node = nodeById[uri];
+        setPreviewNode(node)
+        if (node) {
+          history.replaceState(null, '', window.location.pathname + `#${node.id}`)
+        }
+      }}
       // TODO  don't hardcode the opacitycolor
       _hover={{ textDecoration: 'none', cursor: 'pointer', bgColor: coolHighlightColor + '22' }}
       _focus={{ outlineColor: highlightColor }}
@@ -281,7 +287,7 @@ export const PreviewLink = (props: LinkProps) => {
                     color="black"
                     px={3}
                     sx={{ ...defaultNoteStyle, ...extraNoteStyle }}
-                    //overflowY="scroll"
+                  //overflowY="scroll"
                   >
                     <ProcessedOrg
                       previewText={orgText}

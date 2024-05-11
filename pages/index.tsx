@@ -515,6 +515,17 @@ export function GraphPage() {
     windowWidth,
   )
 
+  useEffect(() => {
+    const hash = window.location.hash
+    if (!hash) return
+    const id = hash.replace('#', '')
+    const node = nodeByIdRef.current[id]
+    if (node) {
+      setEmacsNodeId(id)
+      setPreviewNode(node)
+    }
+  }, [setPreviewNode])
+
   return (
     <VariablesContext.Provider value={{ ...emacsVariables }}>
       <Box

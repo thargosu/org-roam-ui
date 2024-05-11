@@ -18,6 +18,7 @@ export const Search: React.FC<{
       onClose()
       if (!!node) {
         setPreviewNode(node)
+        history.replaceState(null, '', window.location.pathname + `#${node.id}`)
         if (onClickResultItem) onClickResultItem(node.id)
       }
     },

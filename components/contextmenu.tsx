@@ -164,6 +164,9 @@ export const ContextMenu = (props: ContextMenuProps) => {
                 icon={<ViewIcon />}
                 onClick={() => {
                   setPreviewNode(target)
+                  if (target) {
+                    history.replaceState(null, '', window.location.pathname + `#${target.id}`)
+                  }
                 }}
               >
                 Preview
