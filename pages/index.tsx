@@ -759,18 +759,10 @@ export const Graph = function (props: GraphProps) {
 
   const { emacsTheme } = useContext<ThemeContextProps>(ThemeContext)
 
-  const router = useRouter()
-  const pathname = usePathname();
-
   const handleClick = (click: string, node: OrgRoamNode, event: any) => {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
-        console.log(pathname)
-        router.replace({
-          pathname,
-          query: { id: node.id }
-        }, undefined, { shallow: true })
         break
       }
       case mouse.local: {
