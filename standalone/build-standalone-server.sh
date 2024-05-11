@@ -8,12 +8,12 @@ if [ -z "$1" ]
 fi
 
 # Apply necessary patches for standalone operation
-patch ../pages/index.tsx < index.tsx.patch
-patch ../util/uniorg.tsx < uniorg.tsx.patch
-patch ../components/Sidebar/Link.tsx < Link.tsx.patch
-patch ../components/Sidebar/OrgImage.tsx < OrgImage.tsx.patch
-patch ../components/Tweaks/Behavior/BehaviorPanel.tsx < BehaviorPanel.tsx.patch
-patch ../components/contextmenu.tsx < contextmenu.tsx.patch
+# patch ../pages/index.tsx < index.tsx.patch
+# patch ../util/uniorg.tsx < uniorg.tsx.patch
+# patch ../components/Sidebar/Link.tsx < Link.tsx.patch
+# patch ../components/Sidebar/OrgImage.tsx < OrgImage.tsx.patch
+# patch ../components/Tweaks/Behavior/BehaviorPanel.tsx < BehaviorPanel.tsx.patch
+# patch ../components/contextmenu.tsx < contextmenu.tsx.patch
 
 # Copy previously exported content
 cp $1/graphdata.json ../
@@ -26,15 +26,15 @@ yarn
 # Build static webserver
 yarn build
 # Export static webserver
-yarn export -o standalone/out/
+# yarn export
 
-# Revert patches
-patch -R ../pages/index.tsx < index.tsx.patch
-patch -R ../util/uniorg.tsx < uniorg.tsx.patch
-patch -R ../components/Sidebar/Link.tsx < Link.tsx.patch
-patch -R ../components/Sidebar/OrgImage.tsx < OrgImage.tsx.patch
-patch -R ../components/Tweaks/Behavior/BehaviorPanel.tsx < BehaviorPanel.tsx.patch
-patch -R ../components/contextmenu.tsx < contextmenu.tsx.patch
+# # Revert patches
+# patch -R ../pages/index.tsx < index.tsx.patch
+# patch -R ../util/uniorg.tsx < uniorg.tsx.patch
+# patch -R ../components/Sidebar/Link.tsx < Link.tsx.patch
+# patch -R ../components/Sidebar/OrgImage.tsx < OrgImage.tsx.patch
+# patch -R ../components/Tweaks/Behavior/BehaviorPanel.tsx < BehaviorPanel.tsx.patch
+# patch -R ../components/contextmenu.tsx < contextmenu.tsx.patch
 
 # Cleanup temporary data
 rm  ../graphdata.json

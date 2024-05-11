@@ -61,7 +61,7 @@ export type ICollapse = CollapseProps
 
 export interface CollapseProps
   extends WithTransitionConfig<HTMLMotionProps<'div'>>,
-    CollapseOptions {}
+  CollapseOptions { }
 
 export const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
   const {
@@ -93,7 +93,7 @@ export const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, 
    * for the size to take effect.
    */
   warn({
-    condition: Boolean(startingSize > 0 && unmountOnExit),
+    condition: Boolean(Number(startingSize) > 0 && unmountOnExit),
     message: `startingSize and unmountOnExit are mutually exclusive. You can't use them together`,
   })
 
@@ -110,8 +110,8 @@ export const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, 
       exit: unmountOnExit
         ? undefined
         : {
-            display: hasStartingSize ? 'block' : 'none',
-          },
+          display: hasStartingSize ? 'block' : 'none',
+        },
     }),
   }
 

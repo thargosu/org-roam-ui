@@ -37,18 +37,21 @@ export const UniOrg = (props: UniOrgProps) => {
 
   const id = encodeURIComponent(encodeURIComponent(previewNode.id))
   useEffect(() => {
-    fetch(`http://localhost:35901/node/${id}`)
-      .then((res) => {
-        return res.text()
+    fetch(`notes/${id}`)
+      .then((res)  => {
+            if(res.ok)
+               return res.text()
+            else
+               return null
       })
       .then((res) => {
-        if (res === '') {
-          return '(empty node)'
-        }
-        if (res !== 'error') {
-          console.log(res)
-          setPreviewText(res)
-        }
+        if (res) {   
+            if (res === '') 
+                return '(empty node)'
+            else
+                setPreviewText(res)
+        }else
+            setPreviewText('(no content yet)')
       })
       .catch((e) => {
         setPreviewText('(could not find node)')

@@ -28,17 +28,17 @@ export const OrgImage = (props: OrgImageProps) => {
     return `${src}`
   }
   const homeLoader = ({ src, width, quality }: { [key: string]: string | number }) => {
-    return `http://localhost:35901/img/${src}`
+    return `img/${src}`
   }
 
-  if (src.replaceAll(/(http)?.*/g, '$1')) {
-    console.log(src.replaceAll(/(http)?.*/g, '$1'))
+  if (/(http)?.*/g.test(src.replace(/(http)?.*/g, '$1'))) {
+    console.log(src.replace(/(http)?.*/g, '$1'))
     return (
-      <Image layout="responsive" loader={dumbLoader} src={src} alt="" width="auto" height="auto" />
+      <Image layout="responsive" loader={dumbLoader} src={src} alt="" />
     )
   }
 
-  const srcName = src.replaceAll(/file:/g, '')
+  const srcName = src.replace(/file:/g, '')
 
   const dir = path.dirname(file)
   const fullPath =
@@ -47,7 +47,7 @@ export const OrgImage = (props: OrgImageProps) => {
 
   return (
     <Container my={4} position="relative">
-      <img alt="Wow, an image." src={`http://localhost:35901/img/${encodedPath}`} />
+      <img alt="Wow, an image." src={fullPath} />
     </Container>
   )
 }
