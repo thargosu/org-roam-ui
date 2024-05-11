@@ -519,9 +519,11 @@ export function GraphPage() {
   useEffect(() => {
     const hash = window.location.hash
     if (!hash) return
+    console.log("update", hash)
     const id = hash.replace('#', '')
     const node = nodeByIdRef.current[id]
     if (node) {
+      setHash(id)
       setEmacsNodeId(id)
       setPreviewNode(node)
     }
