@@ -1,4 +1,5 @@
 import { HamburgerIcon } from '@chakra-ui/icons'
+import graphDataJson from '../graphdata.json'
 import {
   Box,
   Flex,
@@ -63,6 +64,8 @@ import { getNodeColor } from '../util/getNodeColor'
 import { isLinkRelatedToNode } from '../util/isLinkRelatedToNode'
 import { getLinkColor } from '../util/getLinkColor'
 import { Search } from '../components/Search'
+import { useRouter } from "next/router";
+import { usePathname, useSearchParams } from 'next/navigation'
 
 const d3promise = import('d3-force-3d')
 
@@ -187,7 +190,7 @@ export function GraphPage() {
           if (
             node.level >= headingNode.level ||
             node.pos >= headingNode.pos ||
-            !headingNode.olp?.includes((node.title as string)?.replace(/ *\[\d*\/\d*\] */g, ''))
+            !headingNode.olp?.includes((node.title as string)?.replace(/ *\[\d*\/\d*\] */g, '') ?? '')
           ) {
             return false
           }
@@ -286,7 +289,7 @@ export function GraphPage() {
       if (!ref?.includes('cite')) {
         return acc
       }
-      const key = ref.replaceAll(/cite:(.*)/g, '$1')
+      const key = ref.replace(/cite:(.*)/g, '$1')
       if (!key) {
         return acc
       }
@@ -348,6 +351,7 @@ export function GraphPage() {
   }
   useEffect(() => {
     if (!graphData) {
+      updateGraphData(graphDataJson.data)
       return
     }
     currentGraphDataRef.current = graphData
@@ -430,57 +434,6 @@ export function GraphPage() {
     }, 50)
   }
 
-  useEffect(() => {
-    // initialize websocket
-    WebSocketRef.current = new ReconnectingWebSocket('ws://localhost:35903')
-    WebSocketRef.current.addEventListener('open', () => {
-      console.log('Connection with Emacs established')
-    })
-    WebSocketRef.current.addEventListener('message', (event: any) => {
-      const bh = behaviorRef.current
-      const message = JSON.parse(event.data)
-      switch (message.type) {
-        case 'graphdata':
-          return updateGraphData(message.data)
-        case 'variables':
-          setEmacsVariables(message.data)
-          console.log(message)
-          return
-        case 'theme':
-          return setEmacsTheme(['custom', message.data])
-        case 'command':
-          switch (message.data.commandName) {
-            case 'local':
-              const speed = behavior.zoomSpeed
-              const padding = behavior.zoomPadding
-              followBehavior('local', message.data.id, speed, padding)
-              setEmacsNodeId(message.data.id)
-              break
-            case 'zoom': {
-              const speed = message?.data?.speed || bh.zoomSpeed
-              const padding = message?.data?.padding || bh.zoomPadding
-              followBehavior('zoom', message.data.id, speed, padding)
-              setEmacsNodeId(message.data.id)
-              break
-            }
-            case 'follow': {
-              followBehavior(bh.follow, message.data.id, bh.zoomSpeed, bh.zoomPadding)
-              setEmacsNodeId(message.data.id)
-              break
-            }
-            case 'change-local-graph': {
-              const node = nodeByIdRef.current[message.data.id as string]
-              if (!node) break
-              console.log(message)
-              handleLocal(node, message.data.manipulation)
-              break
-            }
-            default:
-              return console.error('unknown message type', message.type)
-          }
-      }
-    })
-  }, [])
 
   useEffect(() => {
     const fg = graphRef.current
@@ -561,6 +514,17 @@ export function GraphPage() {
     'mainWindowWidth',
     windowWidth,
   )
+
+  useEffect(() => {
+    const hash = window.location.hash
+    if (!hash) return
+    const id = hash.replace('#', '')
+    const node = nodeByIdRef.current[id]
+    if (node) {
+      setEmacsNodeId(id)
+      setPreviewNode(node)
+    }
+  }, [setPreviewNode])
 
   return (
     <VariablesContext.Provider value={{ ...emacsVariables }}>
@@ -810,6 +774,7 @@ export const Graph = function (props: GraphProps) {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
+        history.replaceState(null, '', window.location.pathname + `#${node.id}`)
         break
       }
       case mouse.local: {

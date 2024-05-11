@@ -36,7 +36,7 @@ export const TagMenu = (props: TagMenuProps) => {
       <MenuItem
         icon={
           <Box
-            bgColor={tagColors[target as string]}
+            bgColor={tagColors[target as string] || 'gray.600'}
             borderRadius="sm"
             height={3}
             width={3}
