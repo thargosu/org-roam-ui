@@ -765,7 +765,6 @@ export const Graph = function (props: GraphProps) {
       case mouse.preview: {
         setPreviewNode(node)
         router.replace({
-          pathname: '/',
           hash: node.id
         }, undefined, { shallow: true })
         break
