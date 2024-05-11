@@ -763,6 +763,7 @@ export const Graph = function (props: GraphProps) {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
+        history.replaceState(null, '', window.location.pathname + `#${node.id}`)
         break
       }
       case mouse.local: {
