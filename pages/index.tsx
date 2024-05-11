@@ -65,6 +65,7 @@ import { isLinkRelatedToNode } from '../util/isLinkRelatedToNode'
 import { getLinkColor } from '../util/getLinkColor'
 import { Search } from '../components/Search'
 import { useRouter } from "next/router";
+import { usePathname, useSearchParams } from 'next/navigation'
 
 const d3promise = import('d3-force-3d')
 
@@ -759,12 +760,17 @@ export const Graph = function (props: GraphProps) {
   const { emacsTheme } = useContext<ThemeContextProps>(ThemeContext)
 
   const router = useRouter()
+  const pathname = usePathname();
 
   const handleClick = (click: string, node: OrgRoamNode, event: any) => {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
-        router.replace({ query: { id: node.id } }, undefined, { shallow: true })
+        console.log(pathname)
+        router.replace({
+          pathname,
+          query: { id: node.id }
+        }, undefined, { shallow: true })
         break
       }
       case mouse.local: {
