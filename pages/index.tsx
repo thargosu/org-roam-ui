@@ -764,8 +764,10 @@ export const Graph = function (props: GraphProps) {
     switch (click) {
       case mouse.preview: {
         setPreviewNode(node)
-        const urlWithNewHash = `${window.location.href.split('#')[0]}${node.id}`;
-        router.replace(urlWithNewHash, undefined, { shallow: true })
+        router.replace({
+          pathname: '/',
+          hash: node.id
+        }, undefined, { shallow: true })
         break
       }
       case mouse.local: {
