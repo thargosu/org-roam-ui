@@ -31,6 +31,13 @@ export const OrgImage = (props: OrgImageProps) => {
     return `img/${src}`
   }
 
+  if (src.startsWith("file:")) {
+    const srcName = src.replace(/file:/g, './')
+    return (
+      <Image layout="responsive" loader={dumbLoader} src={srcName} alt="" />
+    )
+  }
+
   if (/(http)?.*/g.test(src.replace(/(http)?.*/g, '$1'))) {
     console.log(src.replace(/(http)?.*/g, '$1'))
     return (
