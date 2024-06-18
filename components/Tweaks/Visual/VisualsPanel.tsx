@@ -45,7 +45,7 @@ export const VisualsPanel = (props: VisualsPanelProps) => {
     setHighlightColor,
     threeDim,
   } = props
-  const setVisualsCallback = useCallback((val) => setVisuals(val), [])
+  const setVisualsCallback = useCallback((val: any) => setVisuals(val), [])
   return (
     <VStack justifyContent="flex-start" align="stretch">
       <ThemeSelect />
