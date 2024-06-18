@@ -18,9 +18,9 @@ export const DropDownMenu = (props: DropDownMenuProps) => {
       <Portal>
         {' '}
         <MenuList zIndex="popover">
-          {textArray.map((option, i) => {
-            ;<MenuItem onClick={onClickArray[i]}> {option} </MenuItem>
-          })}
+          {textArray.map((option, i) => (
+            <MenuItem key={i} onClick={onClickArray[i]}> {option} </MenuItem>
+          ))}
         </MenuList>
       </Portal>
     </Menu>

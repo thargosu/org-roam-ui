@@ -64,7 +64,7 @@ export const SearchContent: React.FC<{
           autoHeight={true}
           autoHide={true}
           autoHeightMax={500}
-          renderThumbVertical={({ style, ...props }) => (
+          renderThumbVertical={({ style, ...props }: { style: React.CSSProperties }) => (
             <Box
               style={{
                 ...style,
