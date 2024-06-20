@@ -29,7 +29,7 @@ export const ThemeSelect = () => {
           color="black"
           rightIcon={<ChevronDownIcon />}
         >
-          {String(emacsTheme[0])}
+          {emacsTheme[0]}
         </MenuButton>
         <MenuList minW={10} zIndex="popover" bgColor="gray.200">
           <MenuItem

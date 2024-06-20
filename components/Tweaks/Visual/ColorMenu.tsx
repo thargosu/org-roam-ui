@@ -29,7 +29,7 @@ export const ColorMenu = (props: ColorMenuProps) => {
   const { label, colorList, value, visValue, setVisuals, noEmpty } = props
 
   const clickCallback = useCallback(
-    (color: any) =>
+    (color) =>
       setVisuals((curr: typeof initialVisuals) => {
         return {
           ...curr,

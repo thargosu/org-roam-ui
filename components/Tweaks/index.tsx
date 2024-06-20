@@ -155,7 +155,7 @@ export const Tweaks = (props: TweakProps) => {
         autoHeight
         autoHeightMax={0.85 * globalThis.innerHeight}
         autoHide
-        renderThumbVertical={({ style, ...props }: { style: any, [key: string]: any }) => (
+        renderThumbVertical={({ style, ...props }) => (
           <Box
             {...props}
             style={{
