@@ -270,7 +270,7 @@ export const PreviewLink = (props: LinkProps) => {
                   autoHeight
                   autoHeightMax={300}
                   autoHide
-                  renderThumbVertical={({ style, ...props }: { style: any, [key: string]: any }) => (
+                  renderThumbVertical={({ style, ...props }) => (
                     <Box
                       style={{
                         ...style,

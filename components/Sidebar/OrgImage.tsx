@@ -5,34 +5,24 @@ import path from 'path'
 import { Container } from '@chakra-ui/react'
 //import '../../../public/placeholder.png'
 
-const convertToNextImageAttr = (value: string | number | undefined): number | undefined => {
-  if (value === undefined) {
-    return undefined
-  }
-
-  if (typeof value === 'number' || !isNaN(Number(value))) {
-    return Number(value)
-  }
-
-  if (value.endsWith('px')) {
-    return Number(value.replace('px', ''))
-  }
-
-  return undefined
-}
-
 export interface OrgImageProps {
-  org: React.ClassAttributes<HTMLImageElement> & React.ImgHTMLAttributes<HTMLImageElement>
+  src: string
   file: string
 }
 
 export const OrgImage = (props: OrgImageProps) => {
-  const { org, file } = props
-  const { src, ...attr } = org
+  const { src, file } = props
 
-  if (!src) {
-    return null
-  }
+  // const [image, setImage] = useState<any>(null)
+
+  /* )
+*   .then((res) => res.blob())
+*   .then((res) => setImage(res))
+*   .catch((e) => {
+*     setImage(null)
+*     console.error(e)
+*   })
+}, [fullPath]) */
 
   const dumbLoader = ({ src, width, quality }: { [key: string]: string | number }) => {
     return `${src}`
@@ -41,38 +31,17 @@ export const OrgImage = (props: OrgImageProps) => {
     return `img/${src}`
   }
 
-  if (src?.startsWith("file:")) {
+  if (src.startsWith("file:")) {
     const srcName = src.replace(/file:/g, './')
-    const attrWidth = convertToNextImageAttr(attr.width)
-    const attrHeight = convertToNextImageAttr(attr.height)
-    const layout = attrWidth || attrHeight ? undefined : "responsive"
     return (
-      <Image
-        {...attr}
-        layout={layout}
-        loader={dumbLoader}
-        src={srcName}
-        width={attrWidth}
-        height={attrHeight}
-        alt={attr.alt ?? "Wow, an image."}
-      />
+      <Image layout="responsive" loader={dumbLoader} src={srcName} alt="" />
     )
   }
 
   if (/(http)?.*/g.test(src.replace(/(http)?.*/g, '$1'))) {
-    const attrWidth = convertToNextImageAttr(attr.width)
-    const attrHeight = convertToNextImageAttr(attr.height)
-    const layout = attrWidth || attrHeight ? undefined : "responsive"
+    console.log(src.replace(/(http)?.*/g, '$1'))
     return (
-      <Image
-        {...attr}
-        layout={layout}
-        loader={dumbLoader}
-        src={src}
-        width={attrWidth}
-        height={attrHeight}
-        alt={attr.alt ?? "Wow, an image."}
-      />
+      <Image layout="responsive" loader={dumbLoader} src={src} alt="" />
     )
   }
 
@@ -82,10 +51,10 @@ export const OrgImage = (props: OrgImageProps) => {
   const fullPath =
     path.isAbsolute(srcName) || srcName.slice(0, 1) === '~' ? srcName : path.join(dir, srcName)
   const encodedPath = encodeURIComponent(encodeURIComponent(fullPath))
-  console.log(srcName, " is ", "local")
+
   return (
     <Container my={4} position="relative">
-      <img {...attr} alt={attr.alt ?? "Wow, an image."} src={fullPath} />
+      <img alt="Wow, an image." src={fullPath} />
     </Container>
   )
 }
