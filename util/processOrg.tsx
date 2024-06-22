@@ -169,16 +169,16 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
             img: (org) => {
               return <OrgImage org={org} file={previewNode?.file} />
             },
-            section: ({ children, className }) => {
-              if (className && !!className?.slice && className?.slice(-1) === `${previewNode.level}`) {
-                return <Box>{children}</Box>
-              }
-              return (
-                <Section {...{ outline, collapse }} className={className ?? ""}>
-                  {children}
-                </Section>
-              )
-            },
+            // section: ({ children, className }) => {
+            //   if (className && !!className?.slice && className?.slice(-1) === `${previewNode.level}`) {
+            //     return <Box>{children}</Box>
+            //   }
+            //   return (
+            //     <Section {...{ outline, collapse }} className={className ?? ""}>
+            //       {children}
+            //     </Section>
+            //   )
+            // },
             blockquote: ({ children }) => (
               <chakra.blockquote
                 color="gray.800"
@@ -191,7 +191,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
                 borderLeftWidth={4}
                 borderLeftColor="gray.700"
               >
-                {children as React.ReactElement[]}
+                {children}
               </chakra.blockquote>
             ),
             p: ({ children }) => {
@@ -207,7 +207,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
                   color="gray.800"
                   bgColor="gray.300"
                 >
-                  {children as any}
+                  {children}
                 </chakra.code>
               }
               return children;
