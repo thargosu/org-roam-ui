@@ -169,16 +169,16 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
             img: (org) => {
               return <OrgImage org={org} file={previewNode?.file} />
             },
-            // section: ({ children, className }) => {
-            //   if (className && !!className?.slice && className?.slice(-1) === `${previewNode.level}`) {
-            //     return <Box>{children}</Box>
-            //   }
-            //   return (
-            //     <Section {...{ outline, collapse }} className={className ?? ""}>
-            //       {children}
-            //     </Section>
-            //   )
-            // },
+            section: ({ children, className }) => {
+              if (className && className?.slice(-1) === `${previewNode.level}`) {
+                return <Box>{children}</Box>
+              }
+              return (
+                <Section {...{ outline, collapse }} className={className ?? ""}>
+                  {children}
+                </Section>
+              )
+            },
             blockquote: ({ children }) => (
               <chakra.blockquote
                 color="gray.800"
