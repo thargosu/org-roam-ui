@@ -77,6 +77,7 @@ export const OrgImage = (props: OrgImageProps) => {
   }
 
   const srcName = src.replace(/file:/g, '')
+  console.log("OrgImage srcName", " is ", srcName)
 
   const dir = path.dirname(file)
   const fullPath =

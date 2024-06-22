@@ -122,6 +122,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
   //.data('settings', { fragment: true })
   // .use(highlight)
 
+  console.log('previewNode', previewNode)
   const isMarkdown = previewNode?.file?.slice(-3) === '.md'
   // const baseProcessor = isMarkdown ? mdProcessor : orgProcessor
 
