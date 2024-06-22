@@ -29,11 +29,11 @@ export const Section: FC<PropsWithChildren<SectionProps>> = (props) => {
   }
 
   if (typeof children === 'string') {
-    return <Box className="sectionContent"> {children}</Box>
+    return <Box className="sectionContent">{children}</Box>
   }
 
   if (!Array.isArray(children)) {
-    return <Box className="sectionContent"> {children}</Box>
+    return <Box className="sectionContent">{children}</Box>
   }
 
   return (
