@@ -1,15 +1,14 @@
 import { Box, Flex, IconButton } from '@chakra-ui/react'
-import React, { ReactChild, useContext, useEffect, useState } from 'react'
+import React, { FC, PropsWithChildren, ReactChild, useContext, useEffect, useState } from 'react'
 import { VscCircleFilled, VscCircleOutline } from 'react-icons/vsc'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import { NoteContext } from '../../util/NoteContext'
 
 export interface SectionProps {
-  children: any
   className: string
 }
 
-export const Section = (props: SectionProps) => {
+export const Section: FC<PropsWithChildren<SectionProps>> = (props) => {
   const {
     children,
     className, // outline
@@ -20,15 +19,28 @@ export const Section = (props: SectionProps) => {
     setOpen(!collapse)
   }, [collapse])
 
+  if (!children) {
+    return null
+  }
+
+
   if (className === 'h0Wrapper headingWrapper') {
     return <Box className="preHeadingContent"> {children}</Box>
   }
-  const kids = children as ReactChild[]
+
+  if (typeof children === 'string') {
+    return <Box className="sectionContent">{children}</Box>
+  }
+
+  if (!Array.isArray(children)) {
+    return <Box className="sectionContent">{children}</Box>
+  }
+
   return (
     <Box className={'sec'}>
       <Box display="block">
         <Flex className="headingFlex" alignItems="baseline">
-          {open && kids.length > 0 ? (
+          {open && children.length > 0 ? (
             <>
               <IconButton
                 className="viewerHeadingButton"
@@ -87,10 +99,10 @@ export const Section = (props: SectionProps) => {
               />
             </>
           )}
-          {kids[0]}
+          {children[0]}
         </Flex>
       </Box>
-      {open && <Box className="sectionContent">{kids.slice(1)}</Box>}
+      {open && <Box className="sectionContent">{children?.slice(1)}</Box>}
     </Box>
   )
 }

@@ -82,7 +82,6 @@ export const OrgImage = (props: OrgImageProps) => {
   const fullPath =
     path.isAbsolute(srcName) || srcName.slice(0, 1) === '~' ? srcName : path.join(dir, srcName)
   const encodedPath = encodeURIComponent(encodeURIComponent(fullPath))
-  console.log(srcName, " is ", "local")
   return (
     <Container my={4} position="relative">
       <img {...attr} alt={attr.alt ?? "Wow, an image."} src={fullPath} />
