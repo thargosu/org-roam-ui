@@ -122,8 +122,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
   //.data('settings', { fragment: true })
   // .use(highlight)
 
-  console.log('previewNode', previewNode)
-  const isMarkdown = false // previewNode?.file?.slice(-3) === '.md'
+  const isMarkdown = previewNode?.file?.slice(-3) === '.md'
   // const baseProcessor = isMarkdown ? mdProcessor : orgProcessor
 
   const processor = useMemo(
@@ -171,11 +170,11 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
               return <OrgImage org={org} file={previewNode?.file} />
             },
             section: ({ children, className }) => {
-              if (className && (className as string).slice(-1) === `${previewNode.level}`) {
-                return <Box>{(children as React.ReactElement[]).slice(1)}</Box>
+              if (className && !!className?.slice && className?.slice(-1) === `${previewNode.level}`) {
+                return <Box>{children}</Box>
               }
               return (
-                <Section {...{ outline, collapse }} className={className as string}>
+                <Section {...{ outline, collapse }} className={className ?? ""}>
                   {children}
                 </Section>
               )
