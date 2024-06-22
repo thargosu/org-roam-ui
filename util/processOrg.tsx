@@ -1,4 +1,4 @@
-import unified from 'unified'
+import { unified } from 'unified'
 //import createStream from 'unified-stream'
 import uniorgParse from 'uniorg-parse'
 import uniorg2rehype from 'uniorg-rehype'
@@ -28,7 +28,7 @@ import remarkRehype from 'remark-rehype'
 
 import { PreviewLink } from '../components/Sidebar/Link'
 import { LinksByNodeId, NodeByCite, NodeById } from '../pages'
-import React, { createContext, ReactNode, useMemo } from 'react'
+import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
 import { OrgImage } from '../components/Sidebar/OrgImage'
 import { Section } from '../components/Sidebar/Section'
 import { NoteContext } from './NoteContext'
@@ -38,6 +38,7 @@ import { OrgRoamLink, OrgRoamNode } from '../api'
 import { toString } from 'hast-util-to-string'
 import { Box, chakra } from '@chakra-ui/react'
 import { normalizeLinkEnds } from './normalizeLinkEnds'
+import * as prod from 'react/jsx-runtime'
 
 export interface ProcessedOrgProps {
   nodeById: NodeById
@@ -72,13 +73,8 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
     useInheritance,
   } = props
 
-  if (!previewNode || !linksByNodeId) {
-    return null
-  }
-
   const orgProcessor = unified()
     .use(uniorgParse)
-    .data('settings', { fragment: true })
     .use(extractKeywords)
     .use(attachments, {
       idDir: attachDir || undefined,
@@ -127,11 +123,11 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
   // .use(highlight)
 
   const isMarkdown = previewNode?.file?.slice(-3) === '.md'
-  const baseProcessor = isMarkdown ? mdProcessor : orgProcessor
+  // const baseProcessor = isMarkdown ? mdProcessor : orgProcessor
 
   const processor = useMemo(
     () =>
-      baseProcessor
+      orgProcessor
         .use(katex, {
           trust: (context) => ['\\htmlId', '\\href'].includes(context.command),
           macros: {
@@ -142,9 +138,12 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
             ...macros,
           },
         })
+        // @ts-ignore
         .use(rehype2react, {
+          Fragment: prod.Fragment,
+          jsx: prod.jsx,
+          jsxs: prod.jsxs,
           createElement: React.createElement,
-          // eslint-disable-next-line react/display-name
           components: {
             a: ({ children, href }) => {
               return (
@@ -167,8 +166,8 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
                 </PreviewLink>
               )
             },
-            img: ({ src }) => {
-              return <OrgImage src={src as string} file={previewNode?.file} />
+            img: (org) => {
+              return <OrgImage org={org} file={previewNode?.file} />
             },
             section: ({ children, className }) => {
               if (className && (className as string).slice(-1) === `${previewNode.level}`) {
@@ -220,6 +219,10 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
   )
 
   const text = useMemo(() => processor.processSync(previewText).result, [previewText])
+  if (!previewNode || !linksByNodeId) {
+    return null
+  }
+
   return (
     <NoteContext.Provider value={{ collapse, outline }}>{text as ReactNode}</NoteContext.Provider>
   )

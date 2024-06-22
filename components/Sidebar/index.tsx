@@ -193,7 +193,7 @@ const Sidebar = (props: SidebarProps) => {
             //autoHeight
             //autoHeightMax={600}
             autoHide
-            renderThumbVertical={({ style, ...props }) => (
+            renderThumbVertical={({ style, ...props }: { style: any, [key: string]: any }) => (
               <Box
                 style={{
                   ...style,
