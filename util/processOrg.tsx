@@ -123,7 +123,7 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
   // .use(highlight)
 
   console.log('previewNode', previewNode)
-  const isMarkdown = previewNode?.file?.slice(-3) === '.md'
+  const isMarkdown = false // previewNode?.file?.slice(-3) === '.md'
   // const baseProcessor = isMarkdown ? mdProcessor : orgProcessor
 
   const processor = useMemo(

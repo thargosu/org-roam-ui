@@ -155,7 +155,6 @@ export const PreviewLink = (props: LinkProps) => {
   const type = href.replaceAll(/(.*?)\:.*/g, '$1')
 
   const extraNoteStyle = outline ? outlineNoteStyle : viewerNoteStyle
-  console.log(previewNode)
   const getText = () => {
     fetch(`notes/${id}`)
       .then((res) => {
