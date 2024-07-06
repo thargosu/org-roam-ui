@@ -7,6 +7,22 @@ import * as d3int from 'd3-interpolate'
 import { ThemeContext } from '../util/themecontext'
 import { usePersistantState } from '../util/persistant-state'
 import { themes } from '../components/themes'
+import { createMultiStyleConfigHelpers } from '@chakra-ui/styled-system'
+
+const helpers = createMultiStyleConfigHelpers(['menu', 'item'])
+const Menu = helpers.defineMultiStyleConfig({
+  baseStyle: {
+    item: {
+      backgroundColor: 'white',
+      "_focus": {
+        backgroundColor: 'gray.200',
+      },
+      _hover: {
+        backgroundColor: 'gray.200',
+      },
+    },
+  },
+})
 
 function MyApp({ Component, pageProps }: AppProps) {
   type Theme = [string, { [color: string]: string }]
@@ -31,11 +47,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     setEmacsTheme(
       JSON.parse(localStorage.getItem('colorTheme') ?? JSON.stringify(initialTheme)) ??
-        initialTheme,
+      initialTheme,
     )
     setHighlightColor(
       JSON.parse(localStorage.getItem('highlightColor') ?? JSON.stringify(highlightColor)) ??
-        highlightColor,
+      highlightColor,
     )
     setIsInitialized(true)
   }, [])
@@ -190,6 +206,7 @@ function SubApp(props: any) {
             },
           }),
         },
+        Menu,
       },
     }
   }, [highlightColor, JSON.stringify(emacsTheme)])
