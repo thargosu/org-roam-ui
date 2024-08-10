@@ -197,20 +197,17 @@ export const ProcessedOrg = (props: ProcessedOrgProps) => {
             p: ({ children }) => {
               return <p lang="en">{children as ReactNode}</p>
             },
-            code: ({ className, children }) => {
-              if (className === 'inline-code') {
-                return <chakra.code
-                  px={1}
-                  py={0.5}
-                  rounded="sm"
-                  fontSize="xs"
-                  color="gray.800"
-                  bgColor="gray.300"
-                >
-                  {children}
-                </chakra.code>
-              }
-              return children;
+            code: ({ children }) => {
+              return <chakra.code
+                px={1}
+                py={0.5}
+                rounded="sm"
+                fontSize="xs"
+                color="gray.800"
+                bgColor="gray.300"
+              >
+                {children}
+              </chakra.code>;
             },
           },
         })
